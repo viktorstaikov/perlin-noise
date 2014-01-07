@@ -377,9 +377,21 @@ PerlinNoise::PerlinNoise()
 
 Color PerlinNoise::getTexColor(const Ray& ray, double u, double v, Vector& normal)
 {
-    u+=100;
-    v+=100;
-    double r = noise(u*0.3,v*0.3)/255;
+    /*double freq = 1 / 100;
+    double mult = 1;
+    double n = 0;
+    for(int i = 0; i< 10; i++){
+        n+=noise(u*freq, v*freq)*mult;
+        freq*=4;
+        mult/=4;
+    }
+
+    n/=255;
+    n+=0.5;*/
+
+    double r = noise(u*0.2 + 300, v*0.2+300)/255 + 0.5;
+
+
     return Color(r,r,r);
 }
 
