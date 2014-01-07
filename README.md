@@ -34,3 +34,8 @@ How to set it up on your machine
       development package ("SDL-devel" and "OpenEXR-devel" on Fedora-based distros,
       "libsdl-dev" and "libopenexr-dev" on Ubuntu et al).
    2. Copy trinity-linux.cbp to trinity.cbp and open it. You're all set.
+=======
+perlin-noise
+============
+
+perlin
