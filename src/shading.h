@@ -231,6 +231,7 @@ public:
 class PerlinNoise: public Texture {
     int permutation[512];
     Vector gradient[512];
+    Color color;
 
     Vector getGradient(const Vector& q)
     {
@@ -256,7 +257,7 @@ public:
     Color getTexColor(const Ray& ray, double u, double v, Vector& normal);
     void fillProperties(ParsedBlock& pb)
     {
-        // nothing special here so far
+		pb.getColorProp("color", &color);
     }
     double noise(double u, double v);
 };

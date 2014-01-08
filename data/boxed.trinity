@@ -57,6 +57,7 @@ BumpTexture diceBump {
 //////////////////////// TEXTURES & SHADERS  ///////////////////////////////
 
 PerlinNoise perlin {
+	color (0.95, 0.25, 0)
 }
 
 Checker checker {
@@ -136,13 +137,13 @@ Node wall_NegativeZ {
 	translate	(0, 0, -64)
 }
 
-//Node teapotNode {
-	//geometry   teapot
-	//shader     plastic
-	//translate  (0, 8, 0)
-	//rotate     (120.3, 0, 0)
-	//scale      (7.5, 7.5, 7.5)
-//}
+Node teapotNode {
+	geometry   teapot
+	shader     plastic
+	translate  (0, 2, 0)
+	rotate     (120.3, 0, 0)
+	scale      (7.5, 7.5, 7.5)
+}
 
 //Node heartNode {
 	//geometry    heart

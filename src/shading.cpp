@@ -377,49 +377,48 @@ PerlinNoise::PerlinNoise()
 
 Color PerlinNoise::getTexColor(const Ray& ray, double u, double v, Vector& normal)
 {
-    /*double freq = 1 / 100;
-    double mult = 1;
-    double n = 0;
-    for(int i = 0; i< 10; i++){
-        n+=noise(u*freq, v*freq)*mult;
-        freq*=4;
-        mult/=4;
-    }
+    u+=1000;
+    v+=1000;
+    /*double s1 = noise(u * 0.01, v * 0.01)/255 + 0.5;
+    double s2 = noise(u * 0.04, v * 0.04)/255 + 0.5;
+    double s3 = noise(u * 0.16, v * 0.16)/255 + 0.5;
+    double s4 = noise(u * 0.64, v * 0.64)/255 + 0.5;
 
-    n/=255;
-    n+=0.5;*/
+    double n = s1 + s2*0.25 + s3*0.625 + s4*0.15625;
 
-    double r = noise(u*0.2 + 300, v*0.2+300)/255 + 0.5;
+    double r = n;*/
 
+    //double r = noise(u, v) + noise(2*u, 2*v)/2 + noise(4*u,4*v)/4 + noise(8*u, 8*v)/8;
+    //double r = sin(noise(u,v));
+    double r = noise(u,v);
 
-    return Color(r,r,r);
+    return Color(r,r,r)*color;
 }
 
 double PerlinNoise::noise(double u, double v)
 {
     Random& rnd = getRandomGen();
 
-    int ix = (int)u;
-    int iy = (int)v;
-    u-=ix;
-    v-=iy;
+    int iu = (int)u;
+    int iv = (int)v;
+    u-=iu;
+    v-=iv;
 
     double su = s_curve(u);
     double sv = s_curve(v);
 
-    ix&=255;
-    iy&=255;
+    iu&=255;
+    iv&=255;
 
-    Vector g00 = gradient[ix + permutation[iy]];
-    Vector g10 = gradient[ix + 1 + permutation[iy]];
-    Vector g01 = gradient[ix + permutation[iy + 1]];
-    Vector g11 = gradient[ix + 1 + permutation[iy + 1]];
+    Vector g00 = gradient[iu + permutation[iv]];
+    Vector g10 = gradient[iu + 1 + permutation[iv]];
+    Vector g01 = gradient[iu + permutation[iv + 1]];
+    Vector g11 = gradient[iu + 1 + permutation[iv + 1]];
 
-    double
-        n00 = g00 * Vector(u, v, 0),
-        n10 = g10 * Vector(u, v, 0),
-        n01 = g01 * Vector(u, v, 0),
-        n11 = g11 * Vector(u, v, 0);
+    double n00 = g00 * Vector(u, v, 0);
+    double n10 = g10 * Vector(u, v, 0);
+    double n01 = g01 * Vector(u, v, 0);
+    double n11 = g11 * Vector(u, v, 0);
     /*double
         n00 = rnd.randdouble()*255,
         n10 = rnd.randdouble()*255,
@@ -430,5 +429,5 @@ double PerlinNoise::noise(double u, double v)
     double x2 = interpolateLinear(n01,n11,su);
 
     double y = interpolateLinear(x1,x2,sv);
-    return y;
+    return y / 128;
 }
