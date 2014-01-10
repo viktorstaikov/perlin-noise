@@ -379,18 +379,10 @@ Color PerlinNoise::getTexColor(const Ray& ray, double u, double v, Vector& norma
 {
     u+=1000;
     v+=1000;
-    /*double s1 = noise(u * 0.01, v * 0.01)/255 + 0.5;
-    double s2 = noise(u * 0.04, v * 0.04)/255 + 0.5;
-    double s3 = noise(u * 0.16, v * 0.16)/255 + 0.5;
-    double s4 = noise(u * 0.64, v * 0.64)/255 + 0.5;
 
-    double n = s1 + s2*0.25 + s3*0.625 + s4*0.15625;
+    double r = noise(u,v) + 0.5*noise(u*2, v*2) + 0.25*noise(u*4,v*4);
 
-    double r = n;*/
-
-    //double r = noise(u, v) + noise(2*u, 2*v)/2 + noise(4*u,4*v)/4 + noise(8*u, 8*v)/8;
-    //double r = sin(noise(u,v));
-    double r = noise(u,v);
+    r = sin(1 / r);
 
     return Color(r,r,r)*color;
 }
@@ -416,14 +408,10 @@ double PerlinNoise::noise(double u, double v)
     Vector g11 = gradient[iu + 1 + permutation[iv + 1]];
 
     double n00 = g00 * Vector(u, v, 0);
-    double n10 = g10 * Vector(u, v, 0);
-    double n01 = g01 * Vector(u, v, 0);
-    double n11 = g11 * Vector(u, v, 0);
-    /*double
-        n00 = rnd.randdouble()*255,
-        n10 = rnd.randdouble()*255,
-        n01 = rnd.randdouble()*255,
-        n11 = rnd.randdouble()*255;*/
+    double n10 = g10 * Vector(u-1, v, 0);
+    double n01 = g01 * Vector(u, v-1, 0);
+    double n11 = g11 * Vector(u-1, v-1, 0);
+
 
     double x1 = interpolateLinear(n00,n10,su);
     double x2 = interpolateLinear(n01,n11,su);

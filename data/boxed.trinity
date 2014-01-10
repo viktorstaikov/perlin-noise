@@ -30,6 +30,12 @@ RectLight l2 {
 
 //////////////////////// GEOMETRIES ////////////////////////////////////////
 
+Sphere globe_ball {
+	center (100, 50, 320)
+	R 50
+}
+
+
 Plane wall {
 	y      0
 	limit   128
@@ -57,8 +63,14 @@ BumpTexture diceBump {
 //////////////////////// TEXTURES & SHADERS  ///////////////////////////////
 
 PerlinNoise perlin {
-	color (0.95, 0.25, 0)
+	color (0.1, 0.67, 1)
 }
+
+
+Lambert globe_shader {
+	texture perlin
+}
+
 
 Checker checker {
 	color1   (0.50, 0.77, 0.77)
@@ -137,13 +149,13 @@ Node wall_NegativeZ {
 	translate	(0, 0, -64)
 }
 
-Node teapotNode {
-	geometry   teapot
-	shader     plastic
-	translate  (0, 2, 0)
-	rotate     (120.3, 0, 0)
-	scale      (7.5, 7.5, 7.5)
-}
+//Node teapotNode {
+	//geometry   teapot
+	//shader     plastic
+	//translate  (0, 2, 0)
+	//rotate     (120.3, 0, 0)
+	//scale      (7.5, 7.5, 7.5)
+//}
 
 //Node heartNode {
 	//geometry    heart
@@ -152,3 +164,10 @@ Node teapotNode {
 	//scale       (7, 7, 7)
 	//rotate		(-240, 0, 0)
 //}
+
+Node globe {
+	geometry globe_ball
+	shader   globe_shader
+	translate   (-5, 6.7, 0)
+	scale       (7, 7, 7)
+}
