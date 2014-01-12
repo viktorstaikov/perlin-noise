@@ -250,7 +250,6 @@ class PerlinNoise: public Texture {
     {
         return a*(1-t) + t*b;
     }
-
 public:
     PerlinNoise();
 
@@ -260,6 +259,7 @@ public:
 		pb.getColorProp("color", &color);
     }
     double noise(double u, double v);
+    double fractalNoise(double u,double v);
 };
 
 #endif // __SHADING_H__

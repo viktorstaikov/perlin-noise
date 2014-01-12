@@ -380,11 +380,30 @@ Color PerlinNoise::getTexColor(const Ray& ray, double u, double v, Vector& norma
     u+=1000;
     v+=1000;
 
-    double r = noise(u,v) + 0.5*noise(u*2, v*2) + 0.25*noise(u*4,v*4);
+    double r = fractalNoise(u,v);
 
-    r = sin(1 / r);
+    r = fabs(r);
+    if(r > 1) r = 1;
+    r = 1-r;
+    //r = sin(1 / r);
 
     return Color(r,r,r)*color;
+}
+
+double PerlinNoise::fractalNoise(double u, double v)
+{
+    double r = noise(u,v);
+    double new_r = -1, exp = 1e-6;
+    double i = 2;
+    do {
+        new_r = (1/i)*noise(u*i,v*i);
+
+        r += new_r;
+
+        i*=2;
+    }
+    while((1/i) > exp);
+    return r;
 }
 
 double PerlinNoise::noise(double u, double v)
